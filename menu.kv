@@ -1,0 +1,383 @@
+JanelaGerenciadora:
+    JanelaPrincipal:
+    Menu:
+    Janela1:
+    Janela2:
+    Janela5:
+
+<JanelaPrincipal>
+
+    name: "janelaprincipal"
+
+    FloatLayout:
+
+        MDToolbar:
+            title: 'Gerenciador Financeiro'
+            pos_hint: {'center_x': 0.5, 'center_y':0.95}
+            right_icon_items: [["close-octagon", lambda x: None]]
+
+        Image:
+            source: 'logo.png'
+            allow_stretch: True
+            size_hint: 0.6, 0.7
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+        MDRaisedButton:
+            text: 'Iniciar'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+            on_release:
+                app.root.current = 'menu'
+                root.manager.transition.direction = 'left'
+
+        MDRaisedButton:
+            text: 'Sair'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.20}
+            on_press: app.fechar()
+
+<Menu>
+
+    name: "menu"
+
+    BoxLayout:
+
+        orientation: 'vertical'
+
+        MDToolbar:
+            title: 'Menu'
+            elevation: 0
+            pos_hint: {'top': 1}
+            #left_action_items: [['arrow-left', lambda x: app.callback()]]
+            MDIconButton:
+                icon: 'arrow-left'
+                pos_hint: {'center_y': 0.5}
+                on_release: app.root.voltar()
+
+        ScrollView:
+
+            MDList:
+
+                OneLineIconListItem:
+                    text: "Receita"
+                    on_release:
+                        app.root.current = 'janela1'
+                        root.manager.transition.direction = 'left'
+
+                    IconLeftWidget:
+                        icon: "cash-plus"
+
+                OneLineIconListItem:
+                    text: "Despesa"
+                    on_release:
+                        app.root.current = 'janela2'
+                        root.manager.transition.direction = 'left'
+
+                    IconLeftWidget:
+                        icon: "cash-minus"
+
+                OneLineIconListItem:
+                    text: "Editar Operação"
+                    on_release:
+                        app.root.current = 'janela2'
+                        root.manager.transition.direction = 'left'
+
+                    IconLeftWidget:
+                        icon: "pencil"
+                OneLineIconListItem:
+                    text: "Excluir Operação"
+                    on_release:
+                        app.root.current = 'janela2'
+                        root.manager.transition.direction = 'left'
+
+                    IconLeftWidget:
+                        icon: "delete"
+                OneLineIconListItem:
+                    text: "Extrato"
+                    on_release:
+                        app.root.current = 'janela5'
+                        root.manager.transition.direction = 'left'
+
+                    IconLeftWidget:
+                        icon: "cash"
+                OneLineIconListItem:
+                    text: "Relatório"
+                    on_release:
+                        app.root.current = 'janela2'
+                        root.manager.transition.direction = 'left'
+
+                    IconLeftWidget:
+                        icon: "view-list"
+
+<Janela1>
+    #Tela para adição de receita.
+
+    name: "janela1"
+
+    FloatLayout:
+
+        MDToolbar:
+            title: 'Adicionar Receita'
+            pos_hint: {'top': 1}
+            #right_action_items: [['plus-thick', lambda x: app.callback(limpar)]]
+            MDIconButton:
+                icon: 'plus-thick'
+                pos_hint: {'center_y': 0.5}
+                on_press: root.limpar()
+
+        MDBottomAppBar:
+            MDToolbar:
+                title: 'Voltar para Menu'
+                type: 'bottom'
+                icon: 'arrow-left-circle'
+                mode: 'end'
+                on_action_button:
+                    app.root.current = 'menu'
+                    root.manager.transition.direction = 'right'
+                    root.limpar()
+
+        MDTextButton:
+            text: 'Adicionar valor:'
+            font_size: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+        TextInput:
+            id: caixa_texto
+            text: ''
+            multiline: False
+            pos_hint: {'center_x': 0.5, 'center_y':0.73}
+            size_hint: 0.5, 0.05
+
+        TooltipMDIconButton:
+            icon: "help-circle"
+            tooltip_text: 'As casas decimais devem ser separadas por ponto.'
+            pos_hint: {"center_x": .775, "center_y": .73}
+
+        TextInput:
+            id: caixa_texto2
+            text: ''
+            hint_text: 'Obs.:'
+            multiline: False
+            pos_hint: {'center_x': 0.5, 'center_y':0.65}
+            size_hint: 0.5, 0.05
+
+        MDTextButton:
+            text: 'Complemento:'
+            font_size: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+
+        MDCheckbox:
+            id: cb_transf
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .7, 'center_y': .45}
+
+        MDLabel:
+            text: 'Transferência'
+            pos_hint: {'center_x': 1.22, 'center_y': .45}
+
+        MDCheckbox:
+            id: cb_din
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .17, 'center_y': .45}
+
+        MDLabel:
+            text: 'Dinheiro'
+            pos_hint: {'center_x': .69, 'center_y': .45}
+
+        MDCheckbox:
+            id: cb_normal
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .7, 'center_y': .35}
+
+        MDLabel:
+            text: 'Extra'
+            pos_hint: {'center_x': .69, 'center_y': .35}
+
+        MDCheckbox:
+            id: cb_extra
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .17, 'center_y': .35}
+
+        MDLabel:
+            text: 'Normal'
+            pos_hint: {'center_x': 1.22, 'center_y': .35}
+
+
+        MDFillRoundFlatButton:
+            text: 'Adicionar'
+            font_size: 19
+            pos_hint: {'center_x': 0.5, 'center_y':0.2}
+            size_hint: 0.5, 0.09
+            on_press:
+                root.adicionar_receita()
+                root.limpar()
+
+
+        MDLabel:
+            id: resposta
+            text: ''
+            font_size: 20
+            halign: 'center'
+            pos_hint: {'center_x': 0.5, 'center_y':0.29}
+
+<Janela2>
+    #Tela para registro de despesa:
+
+    name: "janela2"
+
+    FloatLayout:
+
+        MDToolbar:
+            title: 'Registrar Despesa'
+            pos_hint: {'top': 1}
+            #right_action_items: [['plus-thick', lambda x: app.callback(limpar)]]
+            MDIconButton:
+                icon: 'plus-thick'
+                pos_hint: {'center_y': 0.5}
+                on_press: root.limpar()
+
+        MDBottomAppBar:
+            MDToolbar:
+                title: 'Voltar para Menu'
+                type: 'bottom'
+                icon: 'arrow-left-circle'
+                mode: 'end'
+                on_action_button:
+                    app.root.current = 'menu'
+                    root.manager.transition.direction = 'right'
+                    root.limpar()
+
+        MDTextButton:
+            text: 'Adicionar valor:'
+            font_size: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+        TextInput:
+            id: caixa_texto
+            text: ''
+            multiline: False
+            pos_hint: {'center_x': 0.5, 'center_y':0.73}
+            size_hint: 0.5, 0.05
+
+        TooltipMDIconButton:
+            icon: "help-circle"
+            tooltip_text: 'As casas decimais devem ser separadas por ponto.'
+            pos_hint: {"center_x": .775, "center_y": .73}
+
+        TextInput:
+            id: caixa_texto2
+            text: ''
+            hint_text: 'Obs.:'
+            multiline: False
+            pos_hint: {'center_x': 0.5, 'center_y':0.65}
+            size_hint: 0.5, 0.05
+
+        MDTextButton:
+            text: 'Complemento:'
+            font_size: 20
+            pos_hint: {'center_x': 0.5, 'center_y': 0.55}
+
+        MDCheckbox:
+            id: cb_cartao
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .7, 'center_y': .45}
+
+        MDLabel:
+            text: 'Cartão'
+            pos_hint: {'center_x': 1.22, 'center_y': .45}
+
+        MDCheckbox:
+            id: cb_din
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .23, 'center_y': .45}
+
+        MDLabel:
+            text: 'Dinheiro'
+            pos_hint: {'center_x': .75, 'center_y': .45}
+
+        MDCheckbox:
+            id: cb_fixa
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .23, 'center_y': .35}
+
+        MDLabel:
+            text: 'Fixa'
+            pos_hint: {'center_x': .75, 'center_y': .35}
+
+        MDCheckbox:
+            id: cb_variavel
+            size_hint: None, None
+            size: "48dp", "48dp"
+            pos_hint: {'center_x': .7, 'center_y': .35}
+
+        MDLabel:
+            text: 'Variável'
+            pos_hint: {'center_x': 1.22, 'center_y': .35}
+
+
+        MDFillRoundFlatButton:
+            text: 'Registrar'
+            font_size: 19
+            pos_hint: {'center_x': 0.5, 'center_y':0.2}
+            size_hint: 0.5, 0.09
+            on_press:
+                root.adicionar_despesa()
+                root.limpar()
+
+        MDLabel:
+            id: resposta
+            text: ''
+            font_size: 20
+            halign: 'center'
+            pos_hint: {'center_x': 0.5, 'center_y':0.29}
+
+<Janela5>
+    #Tela para visualizar registros:
+
+    name: "janela5"
+
+    FloatLayout:
+
+        MDToolbar:
+            title: 'Extrato das Operações'
+            pos_hint: {'top': 1}
+            #right_action_items: [['plus-thick', lambda x: app.callback(limpar)]]
+            MDIconButton:
+                icon: 'plus-thick'
+                pos_hint: {'center_y': 0.5}
+        #MDLabel:
+         #   text: 'Clique no botão abaixo para visualizar o seu histórico de operações'
+          #  pos_hint:{'center_x': 0.7, 'center_y':0.6}
+
+        MDFloatLayout:
+            id: box
+            size_hint_y: (0.888)
+        MDBottomAppBar:
+            MDToolbar:
+                title: 'Voltar para Menu'
+                type: 'bottom'
+                icon: 'arrow-left-circle'
+                mode: 'end'
+                on_action_button:
+                    app.root.current = 'menu'
+                    root.manager.transition.direction = 'right'
+
+        MDFillRoundFlatButton:
+            text: 'Visualizar Operações'
+            font_size: 19
+            pos_hint: {'center_x': 0.5, 'center_y':0.2}
+            size_hint: 0.5, 0.09
+            on_press:
+                root.extrato()
+
+        MDLabel:
+            id: resposta
+            text: 'TESTE'
+            font_size: 20
+            halign: 'center'
+            pos_hint: {'center_x': 0.5, 'center_y':0.29}
